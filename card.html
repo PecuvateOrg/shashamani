@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Shashamani's Card</title>
+<meta name="theme-color" content="#0b0b0b">
+<style>
+*{box-sizing:border-box;margin:0}
+body{min-height:100svh;padding:16px;background:#0b0b0b;color:#fff;font-family:system-ui,sans-serif;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+img{display:block;width:auto;max-width:100%;max-height:calc(100svh - 130px);border-radius:12px}
+#save{display:flex;align-items:center;justify-content:center;width:100%;max-width:400px;min-height:56px;border:0;border-radius:12px;background:#c8102e;color:#fff;font:600 18px system-ui,sans-serif;text-decoration:none;cursor:pointer}
+p{font-size:14px;color:#ccc}
+</style>
+</head>
+<body>
+<img src="card-phone.png" alt="Business card for Shashamani Barnett, Author, with a QR code to her page" width="1080" height="1620">
+<a id="save" href="card-phone.png" download="shashamani-barnett-card.png">Save to phone</a>
+<p>Or press and hold the card, then choose Save.</p>
+<script>
+var btn=document.getElementById('save');
+btn.addEventListener('click',function(e){
+  if(!navigator.canShare||!window.File)return;
+  e.preventDefault();
+  fetch('card-phone.png').then(function(r){return r.blob()}).then(function(b){
+    var f=new File([b],'shashamani-barnett-card.png',{type:'image/png'});
+    if(navigator.canShare({files:[f]}))return navigator.share({files:[f]});
+    location.href='card-phone.png';
+  }).catch(function(err){if(err&&err.name!=='AbortError')location.href='card-phone.png'});
+});
+</script>
+</body>
+</html>
